@@ -10,3 +10,6 @@ print(P)
 
 #입력 속도 줄이기
 input = int(sys.stdin.readline())
+
+
+P = [[0 for x in range(n)] for y in range(m)]
