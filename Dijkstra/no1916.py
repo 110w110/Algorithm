@@ -48,13 +48,22 @@ for _ in range(M):
 
 S, D = map(int, sys.stdin.readline().split())
 
+route = [0 for _ in range(N)]
+
 def Dijk(node):
     Visit[node] = True
+    # route.append(node+1)
 
     # 인접노드 거리 갱신
     for W in E[node]:
-        Dist[W[0]-1] = min(Dist[W[0]-1],W[1]+Dist[node])
+        if Dist[W[0]-1] > W[1]+Dist[node]:
+            Dist[W[0]-1] = W[1] + Dist[node]
+            route[W[0]-1] = node+1
+        # Dist[W[0]-1] = min(Dist[W[0]-1],W[1]+Dist[node])
 
+    print(Dist)
+    print(Visit)
+    print(route)
     # 방문하지 않은 노드 중 가장 가까운 노드 선택
     m = 1e9
     isDone = True
@@ -65,8 +74,11 @@ def Dijk(node):
             isDone = False
 
     if isDone: return
+    print(node)
     Dijk(node)
 
 Dist[S-1] = 0
 Dijk(S-1)
 print(Dist[D-1])
+print(Dist)
+print(route)
