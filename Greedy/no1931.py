@@ -1,19 +1,11 @@
 import sys
 
 n = int(sys.stdin.readline())
+l = sorted([list(map(int, sys.stdin.readline().split())) for _ in range(n)], key=lambda x: (x[0], x[1]), reverse=True)
 
-l = []
-
-for _ in range(n):
-    l.append(list(map(int,sys.stdin.readline().split())))
-
-l = sorted(l,key=lambda x : (x[1],x[0]), reverse=True)
-
-print(l)
-count = 1
-i = len(l)-2
-t = l[i+1][0]
-# while t>0:
-#     # l[i][0] 시작시간 l[i][1] 끝시간
-#     # 끝시간 <= 현재시간 중에서 시작시간 제일 느린것
-#
+count, t = 1, l[0][0]
+for j in range(1,len(l)):
+    if l[j][1]<=t:
+        t = l[j][0]
+        count += 1
+print(count)
