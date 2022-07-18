@@ -1,14 +1,31 @@
 import sys
 sys.setrecursionlimit(10**9)
 
-mem = {0:0, 1:1, 2:1, 3:2}
-x = int(sys.stdin.readline())
+n = int(sys.stdin.readline())
 
-def fib(n):
-    if n in mem:
-        return mem[n-1]
+def mul(A,B):
+    result = [[0 for _ in range(len(B))] for _ in range(len(A))]
+    for r in range(len(B)):
+        for c in range(len(A)):
+            t = 0
+            for i in range(len(A)):
+                t += A[r][i] * B[i][c]
+            result[r][c] = t % 1000000007
+    return result
+
+def sep(X,N):
+    if N==0:
+        return [[1]]
+    if N==1:
+        for r in range(len(X)):
+            for c in range(len(X)):
+                X[r][c] %= 1000000007
+        return X
+    n = N//2
+    tmp = sep(X,n)
+    if N%2==0:
+        return mul(tmp,tmp)
     else:
-        mem[n-1] = fib(n-1) + fib(n-2)
-        return mem[n-1]
+        return mul(mul(tmp,tmp),X)
 
-print(fib(x+1)%1000000007)
+print(sep([[1,1],[1,0]],n-1)[0][0])
