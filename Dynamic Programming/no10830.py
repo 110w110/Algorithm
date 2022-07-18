@@ -1,22 +1,33 @@
 import sys
+sys.setrecursionlimit(10**9)
 
 N, B = map(int,sys.stdin.readline().split())
 A = [list(map(int,sys.stdin.readline().split())) for _ in range(N)]
 
-def mul(X,N):
+def mul(A,B):
+    result = [[0 for _ in range(len(B))] for _ in range(len(A))]
+    for r in range(len(B)):
+        for c in range(len(A)):
+            t = 0
+            for i in range(len(A)):
+                t += A[r][i] * B[i][c]
+            result[r][c] = t % 1000
+    return result
+
+def sep(X,N):
+    if N==1:
+        for r in range(len(X)):
+            for c in range(len(X)):
+                X[r][c] %= 1000
+        return X
     n = N//2
     if N%2==0:
-        #A^n A^n
-        if n==1:
-            return X
-        elif n==0:
-            return X
-        else:
-            X = mul(X,n)
-            R = X
-            
+        tmp = sep(X,n)
+        return mul(tmp,tmp)
     else:
-        #A^n A^n A
+        tmp = sep(X,n)
+        return mul(mul(tmp,tmp),X)
 
-
-print(*A,sep='\n')
+R = sep(A,B)
+for x in range(len(R)):
+    print(*R[x],sep=' ')
