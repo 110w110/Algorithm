@@ -10,7 +10,7 @@ for _ in range(T):
         #위에서 시작
         r1 = P[0][0]
         x, y = 0, 0
-        while x<=n-2:
+        while x<n-2:
             if y==0:
                 if x>=n-2:
                     r1 += P[1][x+1]
@@ -35,11 +35,21 @@ for _ in range(T):
                         y = 0
             x += 2
             # print("r1:",r1)
+        # if n%3==2:
+        #     if y==0:
+        #         r1 += max(P[1][x+1]+P[0][x+2],P[1][x+2])
+        #     else:
+        #         r1 += max(P[0][x+1]+P[1][x+2],P[0][x+2])
+        if n%3==1:
+            if y==0:
+                r1 += P[1][x+1]
+            else:
+                r1 += P[0][x+1]
 
         #아래에서 시작
         r2 = P[1][0]
         x, y = 0, 1
-        while x <= n-2:
+        while x < n-2:
             if y == 0:
                 if P[1][x + 1] + P[0][x + 2] >= P[1][x + 2]:
                     r2 += P[1][x + 1] + P[0][x + 2]
@@ -56,11 +66,26 @@ for _ in range(T):
                     y = 0
             x += 2
             # print("r2:",r2)
+        # if n%3==2:
+        #     if y==0:
+        #         r2 += max(P[1][x+1]+P[0][x+2],P[1][x+2])
+        #     else:
+        #         r2 += max(P[0][x+1]+P[1][x+2],P[0][x+2])
+        print(P[1][x+1],P[0][x+1],y)
+        # if n%3==1:
+        #     if y==0:
+        #         r2 += P[1][x+1]
+        #     else:
+        #         r2 += P[0][x+1]
 
+        print('r1',r1,'r2',r2)
         R.append(max(r1, r2))
-    elif n==2:
+
+    elif n%3==2:
+        print("2")
         R.append(max(P[0][0]+P[1][1],P[1][0]+P[0][1]))
-    else:
+    elif n%3==1:
+        print("1")
         R.append(max(P[0][0],P[1][0]))
 
 
