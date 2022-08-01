@@ -20,8 +20,10 @@ def test(x,y,k):
 
     for i in range(9):
         if S[i][x]==k and y!=i:
+            print('x,y=',x,i)
             return False
         if S[y][i]==k and x!=i:
+            print('x,y=',i,y)
             return False
 
     for i in range(yb,yb+4):
@@ -31,5 +33,32 @@ def test(x,y,k):
 
     return True
 
+def backtracking(ind):
+    global S,Q
+    if ind>=len(Q):
+        return True
+
+    x,y = Q[ind]
+    # print(x,y)
+    for t in range(1,10):
+        print(x,y,t,test(x,y,t))
+        if test(x,y,t)==False:
+            continue
+        else:
+            S[y][x]=t
+            print(*S,sep='\n')
+            if backtracking(ind+1)==1:
+                return True
+            else:
+                for i in range(ind,len(Q)+1):
+                    a,b = Q[i]
+                    S[b][a]=0
+    return False
+
+
+
+
+
 findBlank()
 print(Q)
+print(backtracking(0))
