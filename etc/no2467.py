@@ -1,25 +1,33 @@
 import sys
+sys.setrecursionlimit(10**9)
 
 N = int(sys.stdin.readline())
 R = list(map(int,sys.stdin.readline().split()))
 s = 0
 t = N-1
-min = 10**9
-ms, mt = s,t
 
-while True:
-    if s>=t-1:
-        break
-    print(R[s],R[t])
-    if abs(R[t]+R[s])<min:
-        min = abs(R[t]+R[s])
-        ms, mt = s, t
+global min, ms, mt
+min = 10**12
+ms = s
+mt = t
 
-    if abs(s)==abs(t):
-        break
-    elif abs(R[t-1]+R[s])<abs(R[t]+R[s+1]):
-        t-=1
+def mix(a,b):
+    global min, ms, mt
+    if a>=b:
+        return
+    if abs(R[a]+R[b])<=min:
+        ms = a
+        mt = b
+        min = abs(R[b]+R[a])
+    if abs(a)==abs(b):
+        return
+    elif abs(R[b-1]+R[a])==abs(R[b]+R[a+1]):
+        mix(a,b-1)
+        mix(a+1,b)
+    elif abs(R[b-1]+R[a])>abs(R[b]+R[a+1]):
+        mix(a+1,b)
     else:
-        s+=1
+        mix(a,b-1)
 
-print(R[ms], R[mt], abs(R[mt]+R[ms]))
+mix(s,t)
+print(R[ms],R[mt])
