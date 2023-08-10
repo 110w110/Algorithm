@@ -1,3 +1,4 @@
+# 34m20s solved
 import sys
 from copy import deepcopy
 sys.setrecursionlimit(10 ** 6)
